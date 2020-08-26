@@ -1,0 +1,32 @@
+extends ../components/main-layout
+
+block content
+    h1(class="header-text--centered") Seznam témat
+    include ../components/errors
+    include ../components/alerts
+
+    div(class="top-list-edit" id="top")            
+        a(class="button button--box-small content--small-button form-button form-button--edit" href="/sprava-konverzacniho-stromu") Zpět
+        button(class="button button--box-small content--small-button form-button form-button--edit" type="button" name="addButton" onclick="window.location.href = '/tema-pridat';")
+            i(class="fas fa-plus icon--login" aria-hidden="true") 
+            span Přidat
+
+    form(action="/topics-action", method="post" name="topicsAction")
+        div(class="list-container list-container--header")
+            span Název
+        if(topics.length === 0)
+            div(class="list-container")
+                span --SEZNAM JE PRÁZDNÝ--
+        each topic in topics
+            div(class="list-container")
+                span #{topic.topicName}
+                ul(class="button--action-container")
+                    li
+                        button(class="button content--small-button button--action" value=topic.idTopic type="submit" name="deleteButton")
+                            i(class="fas fa-trash-alt icon--edit" aria-hidden="true")
+                    li
+                        button(class="button content--small-button button--action" value=topic.idTopic type="submit" name="updateButton")
+                            i(class="fas fa-edit icon--edit" aria-hidden="true")
+
+        a(class="button button--box-small button--rounded button--rounded--page-up" href="#top") 
+            i(class="fas fa-chevron-circle-up" aria-hidden="true")

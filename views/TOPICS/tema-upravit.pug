@@ -1,0 +1,20 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Upravit téma
+        include ../components/errors
+             
+        form(action="/topic-update", method="post" name="updateTopic")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Detaily o tématu  
+
+                label(for="nameTopic") Název tématu:
+                input(type="text" name="nameTopic" id="nameTopic" value=topic.topicName required)
+                    
+                label(for="reply") Znění rychlé odpovědi zobrazené u výběru témat (max. 20 znaků):
+                input(class="input--smaller" type="text" name="reply" id="reply" maxlength="20" value=quickReply.text required)
+                
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="updateBtn") Potvrdit               
+                a(class="button button--box-small content--small-button form-button" href="/temata") Zrušit 

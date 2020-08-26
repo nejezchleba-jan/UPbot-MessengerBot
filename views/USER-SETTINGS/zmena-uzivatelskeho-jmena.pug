@@ -1,0 +1,21 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Změna uživatelského jména
+        include ../components/errors
+        
+        form(action= "/change-username" method="post" name="changeUsername")
+            div(class="form-container login-container")
+                label(for="oldUsername") Staré jméno:
+                input(type="text" name="oldUsername" id="oldUsername" value=oldName disabled)
+                
+                label(for="newUsername") Nové jméno:
+                input(type="text" name="newUsername" id="newUsername" required)
+                
+                label(for="password") Heslo pro potvrzení:
+                input(type="password" name="password"  id="password" required)
+
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="change-username-button") Potvrdit               
+                a(class="button button--box-small content--small-button form-button" href="/uzivatelska-nastaveni") Zrušit     

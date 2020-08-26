@@ -1,0 +1,93 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Odebrat odpověď
+        include ../components/errors
+
+        form(action="/answer-delete", method="post" name="deleteAnswer")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Umístění v konverzačním stromě   
+            
+                label(for="answerTopic") Téma odpovědi:
+                input(type="text" name="answerTopic" value=selectedTopic disabled)   
+            
+                label(for="answerParentContext") Kontext předka odpovědi:
+                input(type="text" name="answerParentContext" id="answerParentContext" value=loaded.info.parentSpecification disabled)       
+            
+                label(for="answerContext") Název kontextu:
+                input(type="text" name="answerContext" id="answerContext" value=loaded.info.specification disabled)
+
+                if loaded.info.asociatedIntent !== null         
+                    label(for="asociatedIntent") Asociovaná otázka z FAQ:
+                    input(type="text" name="asociatedIntent" id="asociatedIntent" value=loaded.info.asociatedIntent disabled)
+
+                label(for="answerReply") Znění rychlé odpovědi zobrazené u předka:
+                input(class="input--smaller" type="text" name="answerReply" id="answerReply" value=loaded.qr.text disabled)
+
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Stav potomků zvoleného kontextu
+                div(class="container--flex container--centered")
+                    table
+                        tr
+                            th č.
+                            th Název potomka
+                        - for (var x = 0; x < 10; x++)
+                            if childrenStatus[x] !== undefined
+                                tr
+                                    td #{x+1}
+                                    td #{childrenStatus[x].specification}
+                            else
+                                tr
+                                    td #{x+1}
+                                    td --PRÁZDNÉ--
+
+            if (loaded.contents !== undefined)
+                div(class="form-container")
+                    h2(class="header-text--centered header-text--margin-10") Obsah odpovědi
+                    label Typ odpovědi:
+                    ul(class="container--flex container--centered container--border")
+                        li(class="form-container--list-item")
+                            label(for="text") Text
+                            input(type="radio" id="text" name="answerType" value="Text" disabled checked=(loaded.info.includesText === 1))
+                        li(class="form-container--list-item")
+                            label(for="textUrl") Text s odkazem
+                            input(type="radio" id="textUrl" name="answerType" value="TextURL" disabled checked=(loaded.info.includesURL === 1))
+                        li(class="form-container--list-item")
+                            label(for="image") Obrázek
+                            input(type="radio" id="image" name="answerType" value="Obrázek" disabled checked=(loaded.info.includesIMG === 1)) 
+                        li(class="form-container--list-item")
+                            label(for="video") Video
+                            input(type="radio" id="video" name="answerType" value="Video" disabled checked=(loaded.info.includesVideo === 1))
+                    
+                    label(for="textAnswer") Textová odpověď:
+                    textarea(name="textAnswer" id="textAnswer" disabled) #{loaded.contents.text}
+                
+                    label(for="urlAnswer") Odkaz k textu:
+                    input(type="url" name="urlAnswer" id="urlAnswer"  disabled value=loaded.contents.url)
+                
+                    label(for="imageAnswer") URL obrázku:
+                    input(type="url" name="imageAnswer" id="imageAnswer" disabled value=loaded.contents.img)
+                
+                    label(for="videoAnswer") URL videa:
+                    input(type="url" name="videoAnswer" id="videoAnswer" disabled value=loaded.contents.video)
+
+                    div(class="info-message warning-message")
+                        span 
+                            i(class="fas fa-exclamation-circle warning-icon")  
+                        p VAROVÁNÍ
+                        p Smazáním odpovědi zároveň dojde k smazání všech jejích potomků a asociovaných dat!
+            else
+                div(class="form-container")
+                    h2(class="header-text--centered header-text--margin-10") Obsah odpovědi
+                    div(class="info-message")
+                        span 
+                            i(class="fas fa-info-circle info-icon")  
+                        p Obsah odpovědi je dynamicky generován z databáze.
+            
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="answerDeleteBtn") Odebrat               
+                a(class="button button--box-small content--small-button form-button" href="/odpovedI") Zrušit 
+
+    block scripts
+        script(src="/javascripts/selects-toggles.js")

@@ -1,0 +1,58 @@
+extends ../components/main-layout
+
+block content
+    - var chosenId = (personInfo === undefined ? -1 : personInfo.idPerson);
+    section
+        h1(class="header-text--centered") Upravit zaměstnance
+        include ../components/errors
+       
+        if(chosenId !== -1)
+            form(action="/person-edit" method="post" name="personEdit")
+                div(class="form-container")
+                    h2(class="header-text--centered header-text--margin-10") Základní informace
+                        
+                    label(for="titleBefore") Titul před:                 
+                    input(class="input--smaller" type="text" name="titleBefore" id="titleBefore" value=personInfo.titleBefore)
+                    
+                    label(for="firstName") Jméno:                     
+                    input(type="text" name="firstName" id="firstName" required value=personInfo.firstName)
+                
+                    label(for="lastName") Příjmení:                      
+                    input(type="text" name="lastName" id="lastName" required value=personInfo.lastName)
+                
+                    label(for="titleAfter") Titul za:
+                    input(class="input--smaller" type="text" name="titleAfter" id="titleAfter" value=personInfo.titleAfter)
+
+                    label(for="position") Pozice:
+                    select(name="position" id="position" required)
+                        option(value="" hidden) --VYBERTE POZICI--   
+                        each pos in positions
+                            option(value=pos.position selected=(personInfo.position === pos.position)) #{pos.position}                            
+                                        
+                div(class="form-container")
+                    h2(class="header-text--centered header-text--margin-10") Kontakt:
+                        
+                    label(class="optional-input" for="email") Email:
+                    input(type="email" name="email" id="email" value=personInfo.email)
+                    
+                    label(class="optional-input" for="phone") Telefon:      
+                    input(class="input--smaller"  type="text" name="phone" id="phone" value=personInfo.phone)
+                
+                    label(class="optional-input" for="office") Kancelář:
+                    input(class="input--smaller" type="text" name="office" id="office" value=personInfo.office)
+                
+                div(class="form-container")
+                    h2(class="header-text--centered header-text--margin-10") Odkazy:
+                        
+                    label(class="optional-input" for="picture") URL profilového obrázku:                   
+                    input(type="url" name="picture" id="picture" value=personInfo.picture)
+                    
+                    label(class="optional-input" for="profile") URL stránky katedry:                    
+                    input(type="url" name="profile" id="profile" value=personInfo.profile)
+                
+                    label(class="optional-input" for="teachingPage") URL osobní stránky:
+                    input(type="url" name="teachingPage" id="teachingPage" value=personInfo.teachingPage)
+                    
+                div(class="container--flex container--centered")
+                    button(class="button button--box-small content--small-button form-button" type="submit" name="personEditBtn") Potvrdit
+                    a(class="button button--box-small content--small-button form-button" href="/zamestnanci") Zrušit

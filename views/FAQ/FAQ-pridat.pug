@@ -1,0 +1,84 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Přidat otázku do FAQ
+        include ../components/errors
+       
+        form(action="/add-FAQ", method="post" name="addFAQ")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Údaje o otázce
+
+                label(for="intent") Zadejte (evidenční) zkratku otázky:
+                input(type="text" name="intent" id="intent" required)
+                
+                label(for="question") Napište výchozí znění položené otázky:
+                textarea(name="question" id="question" required)
+
+                label(for="text") Odkazuje na existující odpověď?
+                input(type="checkbox" id="answerInTree" name="answerInTree" value="answerInTree" onclick="toggleFAQforms(this.id)")
+
+            div(class="select-style form-container hidden--block" id="existingAnswer")
+                h2(class="header-text--centered header-text--margin-10") Vyberte dostupnou existující odpověď
+                label(for="topicSelect") Vyberte téma odpovědi:
+                select(name="topicSelect" id="topicSelect" onchange="showSecondSelect()")
+                    option(value="-1" selected=true disabled=true) --VYBERTE TÉMA--
+                    each topic in topics
+                        option(value= topic.topicName) #{topic.topicName}
+
+                label(for="contextSelect" id="contextLabel") Vyberte kontext odpovědi:
+                select(name="contextSelect" id="contextSelect")
+                    option(value="-1" selected=true disabled=true) --VYBERTE KONTEXT--   
+                    each topic in topics
+                        optgroup(label= topic.topicName disabled hidden)
+                            each context in contexts
+                                if topic.idTopic === context.idTopic
+                                    option(value= context.specification) #{context.specification}   
+                div(class="info-message")
+                    div  
+                        i(class="fas fa-info-circle info-icon")
+                    p  Změny se mohou projevit až po několika minutách.
+
+            div(class="form-container" id="newAnswer")
+                h2(class="header-text--centered header-text--margin-10") Nová odpověď na otázku
+                label Vyberte typ odpovědi:
+                ul(class="container--flex container--centered container--border")
+                    li(class="form-container--list-item")
+                        label(for="text") Text
+                        input(type="radio" id="text" name="answerType" value="Text" required onclick="switchInputs(this.value)")
+                    li(class="form-container--list-item")
+                        label(for="text-url") Text s odkazem
+                        input(type="radio" id="text-url" name="answerType" value="TextURL" onclick="switchInputs(this.value)" )
+                    li(class="form-container--list-item")
+                        label(for="image") Obrázek
+                        input(type="radio" id="image" name="answerType" value="Obrázek" onclick="switchInputs(this.value)") 
+                    li(class="form-container--list-item")
+                        label(for="video") Video
+                        input(type="radio" id="video" name="answerType" value="Video" onclick="switchInputs(this.value)")
+                                                
+               
+                label(for="textAnswer") Textová odpověď:
+                textarea(id="textAnswer" name="textAnswer" spellcheck=true disabled)
+        
+                label(for="urlAnswer") Odkaz k textu:
+                input(type="url" id="urlAnswer" name="urlAnswer" disabled)
+            
+                label(for="imageAnswer") URL obrázku (max. 25MB):
+                input(type="url" id="imageAnswer" name="imageAnswer" disabled)
+            
+                label(for="videoAnswer") URL videa (max. 25MB):
+                input(type="url" id="videoAnswer" name="videoAnswer" disabled)
+                
+                div(class="info-message")
+                    div  
+                        i(class="fas fa-info-circle info-icon")
+                    p  Změny se mohou projevit až po několika minutách.
+
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="addBtn") Přidat               
+                a(class="button button--box-small content--small-button form-button" href="/FAQ") Zpět 
+
+block scripts
+    script(src="/javascripts/disable-unused-inputs.js")
+    script(src="/javascripts/selects-toggles.js")
+    script(src="/javascripts/FAQ-form-toggles.js")

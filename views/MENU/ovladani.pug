@@ -1,0 +1,25 @@
+extends ../components/main-layout
+
+block content 
+    section
+            h1(class="header-text--centered") Ovládání
+            ul(class="container--flex container--centered container--spaced")
+                li
+                    form(action="/chatbot-on", method="post", name="chatbotOn")
+                        button(class="button button--menu" type="submit" name="turn-on-button" disabled=chatbotState)
+                                i(class="fas fa-play-circle icon--menu" aria-hidden="true") 
+                                span(class="button--menu-text") Spustit chatbota
+                li
+                    form(action="/chatbot-off", method="post", name="chatbotOff")
+                        button(class="button button--menu" type="submit" name="turn-off-button" disabled=!chatbotState)
+                                i(class="fas fa-power-off icon--menu" aria-hidden="true") 
+                                span(class="button--menu-text") Vypnout chatbota
+                li
+                    form(action="/chatbot-restart", method="post", name="chatbotRestart")
+                        button(class="button button--menu" type="submit" name="restart-button" disabled=!chatbotState)
+                                i(class="fas fa-sync-alt icon--menu" aria-hidden="true") 
+                                span(class="button--menu-text") Restartovat chatbota
+                            
+            include ../components/menu-back-button
+            include ../components/restart-alert
+

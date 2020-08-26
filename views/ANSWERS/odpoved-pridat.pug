@@ -1,0 +1,117 @@
+extends ../components/main-layout
+
+block content
+    - var choosenPlacement = (topicName === undefined || parentContext === undefined  ? -1 : {chosenTopic: topicName, chosenParent: parentContext});
+    section
+        h1(class="header-text--centered") Přidat odpověď
+        include ../components/errors
+        form(action="/answer-choose", method="post" name="answerChoose")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Umístění nové odpovědi
+                
+                label(for="topicSelect") Vyberte téma odpovědi:
+                select(name="topicSelect" id="topicSelect" onchange="showSecondSelect()" required)
+                    option(value="" hidden) --VYBERTE TÉMA--
+                    each topic in topics
+                        option(value= topic.topicName selected=(choosenPlacement.chosenTopic === topic.topicName)) #{topic.topicName}
+                
+                label(for="contextSelect" id="contextLabel") Vyberte kontext předka odpovědi:
+                select(name="contextSelect" id="contextSelect" required)
+                    option(value="" hidden) --VYBERTE KONTEXT--   
+                    each topic in topics
+                        optgroup(label= topic.topicName disabled hidden)
+                            each context in contexts
+                                if topic.idTopic === context.idTopic
+                                    option(value= context.specification selected=(choosenPlacement.chosenParent === context.specification)) #{context.specification}
+
+                div(class="container--flex container--centered")
+                    button(class="button content--small-button button--form" type="submit" name="confirmChoiceBtn") Vybrat               
+                    a(class="button content--small-button button--form" href="/sprava-konverzacniho-stromu") Zpět
+
+        if(choosenPlacement !== -1)
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Stav potomků zvoleného kontextu
+                div(class="info-message")
+                    span 
+                        i(class="fas fa-info-circle info-icon")  
+                    p Každá odpověď může mít maximálně 10 potomků. (Omezení FB Messenger)
+                div(class="container--flex container--centered")
+                    table
+                        tr
+                            th č.
+                            th Název potomka
+                        - for (var x = 0; x < 10; x++)
+                            if childrenStatus[x] !== undefined
+                                tr
+                                    td #{x+1}
+                                    td #{childrenStatus[x].specification}
+                            else
+                                tr
+                                    td #{x+1}
+                                    td --PRÁZDNÉ--
+                        
+                
+            if(choosenPlacement !== -1 && childrenStatus.length < 10 )
+                form(action="/answer-add", method="post" name="answerAdd")
+                    div(class="form-container")
+                        h2(class="header-text--centered header-text--margin-10") Zařazení do konverzačního stromu
+
+                        label(for="answerTopic") Téma odpovědi:
+                        input(type="text" name="answerTopic" id="answerTopic" value=topicName disabled)       
+            
+                        label(for="answerParentContext") Kontext předka odpovědi:
+                        input(type="text" name="answerParentContext" id="answerParentContext" value=parentContext disabled) 
+
+                        label(for="answerContext") Napište název nového kontextu: 
+                        input(type="text" name="answerContext" id="answerContext" required)    
+
+                        label(for="answerReply") Napište znění rychlé odpovědi u předka (max. 20 znaků):
+                        input(class="input--smaller" type="text" name="answerReply" id="answerReply" maxlength="20" required)
+                                
+                                        
+                    div(class="form-container")
+                        h2(class="header-text--centered header-text--margin-10") Obsah odpovědi
+                        label Typ obsahu:
+                        ul(class="container--flex container--centered container--border")
+                            li(class="form-container--list-item")
+                                    label(for="text") Text
+                                    input(type="radio" id="text" name="answerType" value="Text" required onclick="switchInputs(this.value)")
+                            li(class="form-container--list-item")
+                                    label(for="text-url") Text s odkazem
+                                    input(type="radio" id="text-url" name="answerType" value="TextURL" onclick="switchInputs(this.value)" )
+                            li(class="form-container--list-item")
+                                    label(for="image") Obrázek
+                                    input(type="radio" id="image" name="answerType" value="Obrázek" onclick="switchInputs(this.value)") 
+                            li(class="form-container--list-item")
+                                    label(for="video") Video
+                                    input(type="radio" id="video" name="answerType" value="Video" onclick="switchInputs(this.value)")
+                                                        
+                        
+                        label(for="textAnswer") Textová odpověď:
+                        textarea(id="textAnswer" name="textAnswer" spellcheck=true disabled)
+                    
+                        label(for="urlAnswer") Odkaz k textu:
+                        input(type="url" id="urlAnswer" name="urlAnswer" disabled)
+                    
+                        label(for="imageAnswer") URL obrázku (max. 25MB):
+                        input(type="url" id="imageAnswer" name="imageAnswer" disabled)
+                        
+                        label(for="videoAnswer") URL videa (max. 25MB):
+                        input(type="url" id="videoAnswer" name="videoAnswer" disabled)
+
+                    div(class="container--flex container--centered")
+                        button(class="button button--box-small content--small-button form-button" type="submit" name="answerAddBtn") Přidat               
+                        a(class="button button--box-small content--small-button form-button" href="/odpoved-pridat") Zrušit 
+            else
+                div(class="form-container")
+                    h2(class="header-text--centered header-text--margin-10") Zařazení do konverzačního stromu
+                    div(class="info-message warning-message")
+                            span 
+                                i(class="fas fa-exclamation-circle warning-icon")  
+                            p Odpověď má maximální možný počet potomků.
+                            p Smažte některého z potomků, nebo novou odpověď přidejte do jiného kontextu.
+                    a(class="button content--small-button button--form" href="/odpovedI") Zrušit 
+
+block scripts
+    script(src="/javascripts/selects-toggles.js")
+    script(src="/javascripts/disable-unused-inputs.js")

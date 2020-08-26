@@ -1,0 +1,55 @@
+extends ../components/main-layout
+
+block content
+    - var n = 0;
+    - var m = 0;
+    - var isDynamicAnswer = JSON.parse(loaded.info.connectedChoices).lastChoices.length > 1;
+    section
+        h1(class="header-text--centered") Upravit odpověď
+        include ../components/errors
+        include ../components/alerts       
+        form(action="/answer-update", method="post" name="updateAnswer")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Místo v konverzačním stromě
+
+                if(loaded.info.parentSpecification !== null)
+                    label(for="answerParentContext") Kontext předka odpovědi:
+                    input(type="text" name="answerParentContext" id="answerParentContext" value=loaded.info.parentSpecification disabled)              
+    
+                label(for="answerContext") Název kontextu:
+                input(type="text" name="answerContext" id="answerContext" value=loaded.info.specification disabled)
+
+                if loaded.info.asociatedIntent !== null  
+                    label(for="asociatedIntent") Asociovaná otázka z FAQ:
+                    input(type="text" name="asociatedIntent" id="asociatedIntent" value=loaded.info.asociatedIntent disabled)
+
+                if ((loaded.info.parentSpecification !== null) && (loaded.qr !== undefined) && !isDynamicAnswer)  
+                    label(for="reply") Znění rychlé odpovědi zobrazené u předka (max 20 znaků):
+                    input(class="input--smaller" type="text" name="reply" id="reply" maxlength="20" value=loaded.qr.text)
+                    div
+                        button(class="button content--small-button button--form" type="submit" name="replyChange") Potvrdit změnu
+
+        if(variantsCount !== 0)
+            form(action="/change-variant", method="post")
+                div(class="form-container")
+                    h2(class="header-text--centered header-text--margin-10") Obsah odpovědi   
+                    label(for="variant") Vyberte variantu odpovědi k editaci:
+                    div(class="container--flex container--centered")
+                        select(class="select--smaller" name="variant" id="variant")
+                            while n < variantsCount
+                                option(value= ++n) #{++m}
+                        button(class="button content--small-button button--form" type="submit" name="changeVariantButton" value="changeVariant") Upravit variantu
+                    button(class="button content--small-button button--form" type="submit" name="addVariantButton" value="addVariant") Přidat variantu
+        else
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Obsah odpovědi
+                div(class="info-message")
+                    span 
+                        i(class="fas fa-info-circle info-icon")  
+                    p Obsah odpovědi je dynamicky generován ze zdrojové databáze. 
+                    p Pro změnu odpovědi upravte relevantní data zdrojové tabulky.
+        div(class="container--flex container--centered")                
+            a(class="button button--box-small content--small-button form-button" href="/odpovedi") Zpět
+
+block scripts
+    script(src="/javascripts/selects-toggles.js")

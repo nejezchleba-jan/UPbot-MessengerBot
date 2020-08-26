@@ -1,0 +1,26 @@
+extends ../components/main-layout
+
+block content
+    section
+            h1(class="header-text--centered") Uživatelská nastavení
+            include ../components/alerts
+            ul(class="container--flex container--centered container--spaced ")
+                li
+                    a(href="/zmena-hesla")
+                        div(class="button button--menu")
+                            i(class="fas fa-key icon--menu" aria-hidden="true") 
+                            span(class="button--menu-text") Změnit heslo
+                li
+                    a(href="/zmena-uzivatelskeho-jmena")
+                        div(class="button button--menu")
+                            i(class="fas fa-user-edit icon--menu" aria-hidden="true") 
+                            span(class="button--menu-text") Změnit uživatelské jméno
+                if isAdmin
+                    li
+                        a(href="/uzivatele")
+                            div(class="button button--menu")
+                                i(class="fas fa-users-cog icon--menu" aria-hidden="true") 
+                                span(class="button--menu-text") Editovat uživatele
+                            
+            include ../components/menu-back-button
+

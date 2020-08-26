@@ -1,0 +1,29 @@
+extends ../components/main-layout
+
+block content
+    h1(class="header-text--centered") Seznam uživatelů
+    include ../components/errors
+    include ../components/alerts
+
+    div(class="top-list-edit" id="top")            
+        a(class="button button--box-small content--small-button form-button form-button--edit" href="/uzivatelska-nastaveni") Zpět
+        button(class="button button--box-small content--small-button form-button form-button--edit" type="button" name="addButton" onclick="window.location.href = '/uzivatele-pridat';")
+            i(class="fas fa-plus icon--login" aria-hidden="true") 
+            span Přidat
+
+    form(action="/users-action", method="post" name="usersAction")
+        div(class="list-container list-container--header")
+            span Uzivatelske jmeno
+        if(users.length === 0)
+            div(class="list-container")
+                span --SEZNAM JE PRÁZDNÝ--
+        each user in users
+            div(class="list-container")
+                span #{user.username}
+                ul(class="button--action-container")
+                    li
+                        button(class="button content--small-button button--action" value=user.id type="submit" name="deleteButton")
+                            i(class="fas fa-trash-alt icon--edit" aria-hidden="true")
+
+        a(class="button button--box-small button--rounded button--rounded--page-up" href="#top") 
+            i(class="fas fa-chevron-circle-up" aria-hidden="true")

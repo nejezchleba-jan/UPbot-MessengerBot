@@ -1,0 +1,22 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Přidat test
+        include ../components/errors
+        
+        form(action="/test-add", method="post" name="testdAdd")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Informace o testu
+                    
+                label(for="collectionName") Označení testu (max. 20 znaků):
+                input(class="input--smaller" type="text" name="collectionName" id="collectionName" required)
+                
+                label(for="collectionURL") URL souboru s testem:
+                input(type="url" name="collectionURL" id="collectionURL" placeholder="www.example.com/test.pdf" required)
+                
+                label(class="optional-input" for="collectionInfo") Informace k vypracování testu:
+                textarea(id="collectionInfo" name="collectionInfo")
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="testAddButton") Přidat               
+                a(class="button button--box-small content--small-button form-button" href="/sprava-zdrojovych-tabulek") Zrušit

@@ -1,0 +1,35 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Odebrat test
+        include ../components/errors
+      
+        form(action="/test-delete", method="post" name="testDelete")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Informace o testu
+                    
+                label(for="collectionName") Označení testu:
+                input(class="input--smaller" type="text" name="collectionName" id="collectionName" disabled value=testInfo.info.collectionName)
+                
+                label(for="collectionURL") URL souboru s testem:
+                input(type="url" name="collectionURL" id="collectionURL" disabled value=testInfo.info.collectionURL)
+                
+                label(class="optional-input" for="collectionInfo") Informace k testu:
+                textarea(id="collectionInfo" name="collectionInfo" disabled) #{testInfo.info.collectionInfo}
+
+                label(for="canTry") Lze si test vyzkoušet?
+                input(type="checkbox" name="canTry" id="canTry" disabled checked=(testInfo.info.canTry === 1))
+                
+                if testInfo.info.canTry === 1
+                    label(for="asociatedQuestions") Počet asociovaných otázek:
+                    input(class="input--smaller" type="number" name="asociatedQuestions" id="asociatedQuestions" disabled value=(testInfo.questions.length))
+                    
+                    div(class="info-message warning-message")
+                        span 
+                            i(class="fas fa-exclamation-circle warning-icon")  
+                        p VAROVÁNÍ: 
+                        p Smazáním testu zároveň smažete také všechny zahrnuté otázky!
+            div(class="container--flex container--centered")   
+                button(class="button button--box-small content--small-button form-button" type="submit" name="testDeleteBtn") Odebrat         
+                a(class="button button--box-small content--small-button form-button" href="/testy") Zrušit

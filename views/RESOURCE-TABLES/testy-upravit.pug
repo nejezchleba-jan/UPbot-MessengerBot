@@ -1,0 +1,39 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Upravit test
+        include ../components/errors
+        include ../components/alerts
+       
+        form(action="/test-edit", method="post" name="testdEdit")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Informace o testu
+                
+                label(for="collectionName") Označení testu:
+                input(class="input--smaller" type="text" name="collectionName" id="collectionName" required value=testInfo.info.collectionName)
+                
+                label(for="collectionURL") URL souboru s testem:
+                input(type="url" name="collectionURL" id="collectionURL" required value=testInfo.info.collectionURL)
+                
+                label(class="optional-input" for="collectionInfo") Informace k testu:
+                textarea(id="collectionInfo" name="collectionInfo") #{testInfo.info.collectionInfo}
+
+                label(for="canTry") Lze si test vyzkoušet?
+                input(type="checkbox" name="canTry" id="canTry" checked=(testInfo.info.canTry === 1))
+                button(class="button content--small-button button--form" type="submit" name="testEditBtn") Potvrdit změny
+
+        form(id="questionsEdit" action="/question-choose" method="post" name="questionsEdit")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Editace zkušebních otázek
+                if testInfo.questions.length !== 0
+                    label(for="questionsSelect") Vyberte otázku k editaci:
+                    div(class="container--flex container--centered")
+                        select(class="select--smaller" id="questionsSelect" name="questionsSelect")
+                            each question in testInfo.questions
+                                option(value=question.questionNumber) #{question.questionNumber}
+                        button(class="button content--small-button button--form" type="submit" name="changeQuestionBtn" value="changeQuestion") Upravit otázku
+                button(class="button content--small-button button--form" type="submit" name="addQuestionBtn" value="addQuestion") Přidat otázku
+
+        div(class="container--flex container--centered")           
+            a(class="button button--box-small content--small-button form-button" href="/testy") Zpět

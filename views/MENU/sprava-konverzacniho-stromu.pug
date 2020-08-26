@@ -1,0 +1,20 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Správa konverzačního stromu
+        ul(class="container--flex container--centered container--spaced")
+            li
+                a(href="/temata")
+                    div(class="button button--menu")
+                        i(class="fas fa-clipboard-list icon--menu" aria-hidden="true") 
+                        span(class="button--menu-text button--menu-margin-10") Editovat témata
+   
+            li
+                a(href="/odpovedi")
+                    div(class="button button--menu")
+                        i(class="fas fa-comments  icon--menu" aria-hidden="true") 
+                        span(class="button--menu-text button--menu-margin-10") Editovat odpovědi
+
+        include ../components/menu-back-button
+        include ../components/restart-alert

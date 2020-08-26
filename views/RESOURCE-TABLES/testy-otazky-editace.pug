@@ -1,0 +1,54 @@
+extends ../components/main-layout
+
+block content
+    - var text = (question !== undefined ? question.text : '')
+    section
+        if question !== undefined
+            h1(class="header-text--centered") Upravit otázku
+        else
+            h1(class="header-text--centered") Přidat otázku
+        include ../components/errors
+        form(action="/question-edit", method="post")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Otázka info
+
+                label(for="questionNumber") Číslo otázky:
+                input(class="input--smaller" type="number" name="questionNumber" id="questionNumber" disabled value=questionNumber)
+                
+                label Forma zadání
+                ul(class="container--flex container--centered container--border")
+                    li(class="form-container--list-item")
+                        label(for="text") Text
+                        input(type="radio" name="questionType" value="text" required checked=(question === undefined || question.text !== null))
+                    li(class="form-container--list-item")
+                        label(for="img") Obrázek
+                        input(type="radio" name="questionType" value="img" checked=(question !== undefined && question.img !== null))
+                
+                label(for="text") Textové zadání otázky:
+                textarea(name="text" id="text" disabled=!(question === undefined || question.text !== null)) #{text}
+                
+                label(for="img") Odkaz na obrázek se zadáním otázky:
+                input(type="url" name="img" id="img" disabled=!(question !== undefined && question.img !== null) value=(question !== undefined && question.img !== null ? question.img  : ''))
+                
+                label(for="answerCount") Počet odpovědí:
+                input(class="input--smaller" type="number" name="answerCount" id="answerCount" min="1" max="7" required value=(question !== undefined ? question.answerCount : 1) onchange="changeLetters(this.value)")
+                
+                label(for="correctAnswer") Písmeno správné odpovědi:
+                select(class="select--smaller" name="correctAnswer" id="correctAnswer")
+                    option(value="A" selected=(question !== undefined && question.correctAnswer === "A")) A
+                    option(value="B" selected=(question !== undefined && question.correctAnswer === "B")) B
+                    option(value="C" selected=(question !== undefined && question.correctAnswer === "C")) C
+                    option(value="D" selected=(question !== undefined && question.correctAnswer === "D")) D
+                    option(value="E" selected=(question !== undefined && question.correctAnswer === "E")) E
+                    option(value="F" selected=(question !== undefined && question.correctAnswer === "F")) F
+                    option(value="G" selected=(question !== undefined && question.correctAnswer === "G")) G
+                div(class="container--flex container--centered")
+                    button(class="button content--small-button button--form" type="submit" name="questionUpdateBtn" value=referer disabled=(n === 1)) Uložit otázku   
+                    if question !== undefined    
+                        button(class="button content--small-button button--form" type="submit" name="questionDeleteBtn" value=referer disabled=(n === 1)) Odebrat otázku
+            
+            div(class="container--flex container--centered")           
+                a(class="button button--box-small content--small-button form-button" href=referer) Zrušit
+
+block scripts
+    script(src="/javascripts/test-questions-toggles.js")

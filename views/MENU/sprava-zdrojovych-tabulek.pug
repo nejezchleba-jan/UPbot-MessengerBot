@@ -1,0 +1,26 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Správa zdrojových tabulek
+        ul(class="container--flex container--centered container--spaced")
+            li
+                a(href="/zamestnanci")
+                    div(class="button button--menu")
+                        i(class="fas fa-address-card icon--menu" aria-hidden="true") 
+                        span(class="button--menu-text button--menu-margin-10") Editovat zaměstnance
+                   
+            li
+                a(href="/obory")
+                    div(class="button button--menu")
+                        i(class="fas fa-graduation-cap icon--menu" aria-hidden="true") 
+                        span(class="button--menu-text button--menu-margin-10") Editovat obory
+
+            li
+                a(href="/testy")
+                    div(class="button button--menu")
+                        i(class="fas fa-file-alt icon--menu" aria-hidden="true") 
+                        span(class="button--menu-text button--menu-margin-10") Editovat testy
+
+        include ../components/menu-back-button
+        include ../components/restart-alert

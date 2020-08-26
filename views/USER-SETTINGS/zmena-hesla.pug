@@ -1,0 +1,19 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Změna hesla
+        include ../components/errors
+        form(action="/change-password" method="post" name="changePass")
+            div(class="form-container login-container")
+                label(for="oldPass") Staré heslo:
+                input(type="password" name="oldPass" id="oldPass" required)
+
+                label(for="newPass") Nové heslo:
+                input(type="password" name="newPass" id="newPass" minlength=5 required)
+
+                label(for="newPassAgain") Potvrzení nového hesla:
+                input(type="password" name="newPassAgain" id="newPassAgain" required)
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="change-username-button") Potvrdit               
+                a(class="button button--box-small content--small-button form-button" href="/uzivatelska-nastaveni") Zrušit   

@@ -1,0 +1,6 @@
+if errors !== null
+    div(class="error")
+        span 
+            i(class="fas fa-times-circle error-icon")  
+        span  #{errors}
+        span(class="closebtn" onclick="this.parentElement.style.display='none';") &times

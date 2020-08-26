@@ -1,0 +1,51 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Přidat obor
+        include ../components/errors
+       
+        form(action="/field-add", method="post" name="fieldAdd")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Základní informace o oboru
+                    
+                label(for="field") Zkratka:
+                input(class="input--smaller" type="text" name="field" id="field" required)
+                
+                label(for="fieldName") Název:
+                input(type="text" name="fieldName" id="fieldName" required)
+
+                label(for="fieldType") Studium:
+                select(name="fieldType" id="fieldType")
+                    option(value="BC") Bakalářské
+                    option(value="MGR") Magisterské
+                    option(value="PHD") Doktorské
+            
+                label(for="pageURL") URL stránky s oborem:
+                input(type="url" name="pageURL" id="pageURL" required)
+
+                label(class="optional-input" for="icon") URL zobrazované ikony:
+                input(type="url" name="icon" id="icon")
+            
+                label(for="canCombi") Lze studovat kombinovanou formou? 
+                input(type="checkbox" name="canCombi" id="canCombi")
+                        
+                                  
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Popisy
+                
+                label(for="mainDescription") Obecný popis:                    
+                textarea(id="mainDescription" name="mainDescription" required)
+                
+                label(for="applicationDescription") Popis uplatnění absolventa:                   
+                textarea(id="applicationDescription" name="applicationDescription" required)
+            
+                label(for="studiesDescription") Popis studijního programu:                  
+                textarea(id="studiesDescription" name="studiesDescription" required)
+
+                label(for="suitableFor") Vhodné pro:
+                textarea(id="suitableFor" name="suitableFor" required)
+                
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="personAddBtn") Přidat               
+                a(class="button button--box-small content--small-button form-button" href="/obory") Zrušit

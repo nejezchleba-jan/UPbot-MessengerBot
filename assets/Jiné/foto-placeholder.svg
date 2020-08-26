@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="156px" height="190px" viewBox="0 0 156 190" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>Group 3</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="156" height="190"></rect>
+    </defs>
+    <g id="Clean" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="lide" transform="translate(-145.000000, -1446.000000)">
+            <g id="Group-Copy" transform="translate(145.000000, 1446.000000)">
+                <g id="Group-3">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Oval" fill="#FCFCFC" xlink:href="#path-1"></use>
+                    <path d="M78.5,128 C99.7552083,128 117,110.755208 117,89.5 C117,68.2447917 99.7552083,51 78.5,51 C57.2447917,51 40,68.2447917 40,89.5 C40,110.755208 57.2447917,128 78.5,128 Z M112.5,137 C131.555912,137 147,152.518697 147,171.666667 L147,196 C147,203.177083 141.205078,197 134.0625,197 L21.9375,197 C14.7949219,197 9,203.177083 9,196 L9,171.666667 C9,152.518697 24.444088,137 43.5,137 L58.3510666,137 C64.361824,139.762553 70.9921875,141.333333 78,141.333333 C85.0078125,141.333333 91.665287,139.762553 97.6489334,137 L112.5,137 Z" id="" fill="#8E8E8E" fill-rule="nonzero" opacity="0.11" mask="url(#mask-2)"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

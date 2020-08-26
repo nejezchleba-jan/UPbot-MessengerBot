@@ -1,0 +1,57 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Přidat téma
+        include ../components/errors
+
+        form(action="/topic-add", method="post" name="addTopic" id="addTopic")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Základní informace o tématu
+            
+                label(for="newTopic") Napište název nového tématu:
+                input(type="text" name="newTopic" id="newTopic" required)
+
+                
+                label(for="newRootContext") Napište název kořenového kontextu:            
+                input(type="text" name="newRootContext" id="newRootContext" required)
+
+            
+                label(for="newReply") Napište znění rychlé odpovědi pro téma (max. 20 znaků):
+                input(class="input--smaller" type="text" name="newReply" id="newReply" maxlength="20" required)
+
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Obsah kořenového kontextu
+                label Typ obsahu:
+                ul(class="container--flex container--centered container--border")
+                    li(class="form-container--list-item")
+                        label(for="text") Text
+                        input(type="radio" id="text" name="answerType" value="Text" required onclick="switchInputs(this.value)")
+                    li(class="form-container--list-item")
+                        label(for="text-url") Text s odkazem
+                        input(type="radio" id="text-url" name="answerType" value="TextURL" onclick="switchInputs(this.value)" )
+                    li(class="form-container--list-item")
+                        label(for="image") Obrázek
+                        input(type="radio" id="image" name="answerType" value="Obrázek" onclick="switchInputs(this.value)") 
+                    li(class="form-container--list-item")
+                        label(for="video") Video
+                        input(type="radio" id="video" name="answerType" value="Video" onclick="switchInputs(this.value)")
+                
+                label(for="textAnswer") Textová odpověď:
+                textarea(id="textAnswer" name="textAnswer" spellcheck=true disabled)
+            
+                label(for="urlAnswer") Odkaz k textu:
+                input(type="url" id="urlAnswer" name="urlAnswer" disabled)
+            
+                label(for="imageAnswer") Odkaz obrázku:
+                input(type="url" id="imageAnswer" name="imageAnswer" disabled)
+            
+                label(for="videoAnswer") Odkaz videa:
+                input(type="url" id="videoAnswer" name="videoAnswer" disabled)
+                
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="topicDeleteBtn") Přidat               
+                a(class="button button--box-small content--small-button form-button" href="/temata") Zrušit  
+
+block scripts
+    script(src="/javascripts/disable-unused-inputs.js")

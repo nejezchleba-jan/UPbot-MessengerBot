@@ -1,0 +1,44 @@
+extends ../components/main-layout
+
+block content
+    - var text = (variant.header.includesText === 1);
+    - var url = (variant.header.includesURL === 1);
+    - var img = (variant.header.includesIMG === 1);
+    - var video = (variant.header.includesVideo === 1);
+    section
+        if !variant.variantNew 
+            h1(class="header-text--centered") Upravit variantu
+        else
+            h1(class="header-text--centered") Přidat variantu
+        include ../components/errors
+        form(action="/variant-update", method="post")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Varianta info
+                
+                label(for="variantContext") Název kontextu varianty:
+                input(type="text" name="variantContext" id="variantContext" value=context disabled)
+                    
+                label(for="variantNum") Číslo varianty:
+                input(class="input--smaller" type="text" name="variantNum" id="variantNum" value=variant.variantNum disabled)
+
+                if !variant.variantNew && variant.variantNum !== "1" 
+                    button(class="button content--small-button button--form" type="submit" name="variantDeleteButton" value=referer disabled=(n === 1)) Odebrat vybranou variantu
+
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Obsah odpovědi
+
+                if(text || url)
+                    label(for="textAnswer") Textová odpověď:
+                    textarea(name="textAnswer" id="textAnswer") #{variant.content.text}
+                if(url)
+                    label(for="urlAnswer") Odkaz k textu:
+                    input(type="text" name="urlAnswer" id="urlAnswer" value=variant.content.url)
+                if(img)
+                    label(for="imageAnswer") URL obrázku (max. 25MB):
+                    input(type="text" name="imageAnswer" id="imageAnswer" value=variant.content.img)
+                if(video)
+                    label(for="videoAnswer") URL videa (max. 25MB):
+                    input(type="text" name="videoAnswer" id="videoAnswer" value=variant.content.video)
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="variantUpdateButton" value=referer) Uložit               
+                a(class="button button--box-small content--small-button form-button" href=referer) Zrušit

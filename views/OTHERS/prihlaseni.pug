@@ -1,0 +1,29 @@
+extends ../components/main-document
+
+
+block header
+    div(class="container--flex-column")
+        img(class="big-logo--upbot" src="img/logo/upbot-logo.png", alt="Logo chatbota Katedry informatiky Univerzity Palackého")
+        h1(class="header-text--centered") Vítejte v rozhraní pro správu UPbota
+
+block content
+    section
+        include ../components/errors
+        form(action="/login", method="post")
+            div(class="form-container login-container")
+                h2(class="header-text--centered header-text--margin-10") Přihlášení
+                div(class="login-field")
+                    span
+                        i(class="fas fa-user icon--login" aria-hidden="true") 
+                    input(class="username input--login text--small-button" type="text" name="username" placeholder="Uživatelské jméno")
+                div(class="login-field")
+                    span
+                        i(class="fas fa-lock icon--login" aria-hidden="true") 
+                    input(class="password input--login text--small-button" type="password" name="password" placeholder="Heslo")
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="change-username-button") Přihlásit se  
+
+block footer
+    a(href='https://www.inf.upol.cz' aria-label='Katedra informatiky')
+        include ../components/katedra-logo
+    small © 2020 Katedra informatiky Univerzity Palackého | Jan Nejezchleba

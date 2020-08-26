@@ -1,0 +1,15 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Odebrat uživatele
+        include ../components/errors
+     
+        form(action="/user-delete", method="post" name="userAdd")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Uživatel k odebrání                                                                 
+                label(for="username") Uživatelské jméno
+                input(type="text" id="username" name="username" disabled value=user.username)          
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="userAddBtn") Odebrat               
+                a(class="button button--box-small content--small-button form-button" href="/uzivatelska-nastaveni") Zrušit

@@ -1,0 +1,67 @@
+extends ../components/main-layout
+
+block content
+    h1(class="header-text--centered") Seznam odpovědí
+    include ../components/errors
+    include ../components/alerts
+
+    div(class="top-list-edit" id="top")            
+        a(class="button button--box-small content--small-button form-button form-button--edit" href="/sprava-konverzacniho-stromu") Zpět
+        button(class="button button--box-small content--small-button form-button form-button--edit" type="button" name="addButton" onclick="window.location.href = '/odpoved-pridat';")
+            i(class="fas fa-plus icon--login" aria-hidden="true") 
+            span Přidat
+    div(class="list-container list-container--header")
+        span Odpovědi pro uživatelsky definovaná témata
+    div(class="container--flex container--centered")
+        each topic in userTopics
+            button(class="accordion list-container list-container--header" type="button") #{topic.topicName}
+            div(class="panel")
+                if(userContexts.length === 0)
+                    div(class="list-container")
+                        span --SEZNAM JE PRÁZDNÝ--
+                each context in userContexts
+                    if topic.idTopic === context.idTopic
+                        form(action="/answers-action", method="post" name="answersAction")
+                            div(class="list-container")
+                                if context.parentSpecification === null
+                                    span #{context.specification} (KOŘENOVÁ ODPOVĚĎ)
+                                    ul(class="button--action-container")
+                                        li
+                                            button(class="button content--small-button button--action" value=context.specification type="submit" name="updateButton")
+                                                i(class="fas fa-edit icon--edit" aria-hidden="true")
+                                else
+                                    span #{context.specification}
+                                    ul(class="button--action-container")
+                                        li
+                                            button(class="button content--small-button button--action" value=context.specification type="submit" name="deleteButton")
+                                                i(class="fas fa-trash-alt icon--edit" aria-hidden="true")
+                                        li
+                                            button(class="button content--small-button button--action" value=context.specification type="submit" name="updateButton")
+                                                i(class="fas fa-edit icon--edit" aria-hidden="true")                                       
+    
+    div(class="list-container list-container--header")
+        span Odpovědi pro základní témata (nelze odebrat)
+    div(class="container--flex container--centered")
+        each topic in coreTopics
+            button(class="accordion list-container list-container--header" type="button") #{topic.topicName}
+            div(class="panel")
+                if(coreContexts.length === 0)
+                    div(class="list-container")
+                        span --SEZNAM JE PRÁZDNÝ--
+                each context in coreContexts
+                    if topic.idTopic === context.idTopic
+                        form(action="/answers-action", method="post" name="answersAction")
+                            div(class="list-container")
+                                span #{context.specification}
+                                ul(class="button--action-container")
+                                    li
+                                        button(class="button content--small-button button--action" value=context.specification type="submit" name="updateButton")
+                                            i(class="fas fa-edit icon--edit" aria-hidden="true")
+    
+    
+    a(class="button button--box-small button--rounded button--rounded--page-up" href="#top") 
+            i(class="fas fa-chevron-circle-up" aria-hidden="true")
+                            
+
+block scripts 
+    script(src="/javascripts/answers-accordion.js")

@@ -1,0 +1,18 @@
+extends ../components/main-document
+
+block header
+    div(class="container--flex-column")
+        img(class="big-logo--upbot" src="img/logo/upbot-logo.png", alt="Logo chatbota Katedry informatiky Univerzity Palackého", height="200" width="200")
+
+block content
+    section
+        h1(class="header-text--centered") ERROR 500 - Interní serverová chyba
+        div(class="flex-center-vertically container--centered")
+            p Omlouváme se, ale došlo k neočekávané chybě na serveru.
+            p Tlačítko níže vás vrátí zpět na úvodní stránku.
+        div
+            include ../components/menu-back-button
+block footer
+    a(href='https://www.inf.upol.cz' aria-label='Katedra informatiky')
+        include ../components/katedra-logo
+    small © 2020 Katedra informatiky Univerzity Palackého | Jan Nejezchleba

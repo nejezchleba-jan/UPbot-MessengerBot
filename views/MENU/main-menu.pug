@@ -1,0 +1,30 @@
+extends ../components/main-layout
+
+block content  
+    section
+            h1(class="header-text--centered") Hlavní menu
+            ul(class="container--flex container--centered container--spaced")
+                li
+                    a(href="/FAQ")
+                        div(class="button button--menu")
+                            i(class="fas fa-scroll icon--menu" aria-hidden="true") 
+                            span(class="button--menu-text") Spravovat FAQ
+                li
+                    a(href="/sprava-konverzacniho-stromu")
+                        div(class="button button--menu")
+                            i(class="fas fa-sitemap icon--menu" aria-hidden="true") 
+                            span(class="button--menu-text") Spravovat konverzační strom
+                li
+                    a(href="/sprava-zdrojovych-tabulek")
+                        div(class="button button--menu")
+                            i(class="fas fa-database icon--menu" aria-hidden="true")
+                            span(class="button--menu-text") Spravovat zdrojové tabulky
+
+                li
+                    a(href="/ovladani")
+                        div(class="button button--menu")
+                            i(class="fas fa-cog icon--menu" aria-hidden="true") 
+                            span(class="button--menu-text") Ovládání
+
+            include ../components/restart-alert
+            

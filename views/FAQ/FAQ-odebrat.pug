@@ -1,0 +1,60 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Odebrat otázku z FAQ
+        include ../components/errors
+        
+        form(action="/delete-FAQ", method="post" name="delete-faq")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Údaje o otázce
+
+                label(for="intent") Zkratka otázky:
+                input(type="text" name="intent" id="intent" value=faq.intent disabled)
+
+                label(for="question") Znění výchozí otázky:
+                textarea(name="question" id="question" disabled) #{faq.question}
+
+                label(for="answerInTree") Odkazuje na existující odpověď?
+                input(type="checkbox" name="answerInTree" id="answerInTree" checked=(faq.answerInTree === 1) disabled)
+
+            if faq.answerInTree
+                div(class="form-container")
+                    h2(class="header-text--centered header-text--margin-10") Odkazovaná odpověď
+                    
+                    label(for="answerTopic") Téma odpovědi:
+                    input(type="text" name="answerTopic" id="answerTopic" value=chatbot.topicName disabled)
+                    
+                    label(for="answerContext") Název kontextu: 
+                    input(type="text" name="answerContext"  id="answerContext" value=chatbot.specification disabled)
+
+                    div(class="info-message") 
+                        div  
+                            i(class="fas fa-info-circle info-icon")    
+                        p  Změny se mohou projevit až po několika minutách. 
+                        p  Odkazovaná odpověď nebude z konverzačního stromu vymazána.
+
+            else
+                div(class="form-container")
+                    h2(class="header-text--centered header-text--margin-10") Odpověď na otázku
+                    if(faq.textAnswer != null)        
+                        label(for="textAnswer") Textová odpověď:
+                        textarea(name="textAnswer" id="textAnswer" disabled) #{faq.textAnswer}
+                    if(faq.urlAnswer != null)  
+                        label(for="urlAnswer") Odkaz k textu:
+                        input(type="text" name="urlAnswer" id="urlAnswer" value=faq.urlAnswer disabled)
+                    if(faq.imageAnswer != null) 
+                        label(for="imageAnswer") URL obrázku:
+                        input(type="text" name="imageAnswer" id="imageAnswer" value=faq.imageAnswer disabled)
+                    if(faq.videoAnswer != null) 
+                        label(for="videoAnswer") URL videa:
+                        input(type="text" name="videoAnswer" id="videoAnswer" value=faq.videoAnswer disabled)
+
+                    div(class="info-message")
+                        div  
+                            i(class="fas fa-info-circle info-icon")   
+                        span  Změny se mohou projevit až po několika minutách.
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="deleteBtn") Odebrat               
+                a(class="button button--box-small content--small-button form-button" href="/FAQ") Zrušit 
+

@@ -1,0 +1,30 @@
+extends ../components/main-layout
+
+block content
+    section 
+        h1(class="header-text--centered") Trénování chatbota
+        include ../components/errors
+        
+        form(action="/add-sample" method="POST" name="training-chatbot")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Nová varianta otázky
+
+                label(for="intent") Zkratka otázky:
+                input(type="text" name="intent" id="intent" value=loadedContent.faq.intent disabled)
+                
+                label(for="questionFAQ") Výchozí verze otázky:
+                textarea(name="questionFAQ" id="questionFAQ" disabled) #{loadedContent.faq.question}
+                
+                label(for="newSample") Napište další možnou variantu otázky:
+                textarea(name="newSample" id="newSample")
+
+                div(class="info-message")
+                    div  
+                        i(class="fas fa-info-circle info-icon")
+                    p  Změny se mohou projevit až po několika minutách.
+
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="trainBtn") Odeslat               
+                a(class="button button--box-small content--small-button form-button" href="/FAQ") Zrušit 
+            
+            

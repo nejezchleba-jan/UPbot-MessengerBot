@@ -1,0 +1,18 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Přidat uživatele
+        include ../components/errors
+       
+        form(action="/user-add", method="post" name="userAdd")
+            div(class="form-container login-container")
+                h2(class="header-text--centered header-text--margin-10") Přihlašovací údaje                                                                                                                
+                label(for="username") Uživatelské jméno
+                input(type="text" id="username" name="username" required)
+            
+                label(for="password") Výchozí heslo
+                input(type="password" id="password" name="password" minlength=5 required)
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="userAddBtn") Přidat               
+                a(class="button button--box-small content--small-button form-button" href="/uzivatelska-nastaveni") Zrušit

@@ -1,0 +1,67 @@
+extends ../components/main-layout
+
+block content
+    section
+        h1(class="header-text--centered") Odebrat téma
+        include ../components/errors
+      
+        form(action="/topic-delete", method="post" name="deleteTopicForm")
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Detaily o tématu
+
+                label(for="idTopic") Identifikátor tématu:
+                input( type="text" name="idTopic" id="idTopic" value=topic.idTopic disabled)
+
+                label(for="nameTopic") Název tématu:
+                input( type="text" name="nameTopic" id="nameTopic" value=topic.topicName disabled)
+
+                label(for="nameRoot") Název kontextu kořenového dialogu:
+                input( type="text" name="nameRoot" id="nameRoot" value= rootAnswer.specification disabled)
+                
+                if rootAnswer.asociatedIntent !== null
+                    label(for="asociatedIntent") Asociovaná otázka z FAQ:
+                    input(type="text" name="asociatedIntent" id="asociatedIntent" value=rootAnswer.asociatedIntent disabled)
+
+                label(for="reply") Znění rychlé odpovědi zobrazené u výběru témat:
+                input(class="input--smaller" type="text" name="reply" id="reply" value=quickReply.text disabled)
+                    
+            div(class="form-container")
+                h2(class="header-text--centered header-text--margin-10") Obsah kořenového kontextu
+                div
+                    label Typ odpovědi:
+                    ul(class="container--flex container--centered container--border")
+                        li(class="form-container--list-item")
+                            label(for="text") Text
+                            input(type="radio" id="text" name="answerType" value="Text" checked=(rootAnswer.includesText === 1) disabled)
+                        li(class="form-container--list-item")
+                            label(for="textUrl") Text s odkazem
+                            input(type="radio" id="textUrl" name="answerType" value="TextURL" checked=(rootAnswer.includesText === 1) && (rootAnswer.includesURL === 1) disabled)
+                        li(class="form-container--list-item")
+                            label(for="image") Obrázek
+                            input(type="radio" id="image" name="answerType" value="Obrázek" checked=(rootAnswer.includesIMG === 1) disabled) 
+                        li(class="form-container--list-item")
+                            label(for="video") Video
+                            input(type="radio" id="video" name="answerType" value="Video" checked=(rootAnswer.includesVideo === 1)  disabled)
+
+                
+                label(for="textAnswer") Textová odpověď:
+                textarea(name="textAnswer", id="textAnswer" disabled) #{rootAnswer.text}
+            
+                label(for="urlAnswer") URL odkazu:
+                input( type="text" name="urlAnswer" id="urlAnswer" value=rootAnswer.url disabled)
+            
+                label(for="imageAnswer") URL obrázku:
+                input( type="text" name="imageAnswer" id="imageAnswer" value=rootAnswer.img disabled)
+            
+                label(for="videoAnswer") URL videa:
+                input( type="text" name="videoAnswer" id="videoAnswer" value=rootAnswer.video disabled)
+
+                div(class="info-message warning-message")
+                    span 
+                        i(class="fas fa-exclamation-circle warning-icon")  
+                    p VAROVÁNÍ 
+                    p Smazáním tématu smažete i všechny asociované odpovědi a vázané FAQ otázky!
+
+            div(class="container--flex container--centered")
+                button(class="button button--box-small content--small-button form-button" type="submit" name="topicDeleteBtn") Odebrat               
+                a(class="button button--box-small content--small-button form-button" href="/temata") Zrušit   

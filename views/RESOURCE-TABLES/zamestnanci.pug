@@ -1,0 +1,29 @@
+extends ../components/main-layout
+
+block content
+    h1(class="header-text--centered") Seznam zaměstnanců
+    include ../components/errors
+    include ../components/alerts
+
+    div(class="top-list-edit" id="top")            
+        a(class="button button--box-small content--small-button form-button form-button--edit" href="/sprava-zdrojovych-tabulek") Zpět
+        button(class="button button--box-small content--small-button form-button form-button--edit" type="button" name="addButton" onclick="window.location.href = '/zamestnanci-pridat';")
+            i(class="fas fa-plus icon--login" aria-hidden="true") 
+            span Přidat
+
+    form(action="/person-action", method="post" name="personAction")
+        div(class="list-container list-container--header")
+            span Jméno
+        each person in people
+            div(class="list-container")
+                span #{person.fullName}
+                ul(class="button--action-container")
+                    li
+                        button(class="button content--small-button button--action" value=person.idPerson type="submit" name="deleteButton")
+                            i(class="fas fa-trash-alt icon--edit" aria-hidden="true")
+                    li
+                        button(class="button content--small-button button--action" value=person.idPerson type="submit" name="updateButton")
+                            i(class="fas fa-edit icon--edit" aria-hidden="true")
+
+        a(class="button button--box-small button--rounded button--rounded--page-up" href="#top") 
+            i(class="fas fa-chevron-circle-up" aria-hidden="true")

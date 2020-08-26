@@ -1,0 +1,31 @@
+doctype html
+html(lang="cs")
+    head
+        title UPbot
+        meta(charset="UTF-8")
+        meta(name="description" content="Rozhraní pro ovládání chatbota Katedry informatiky Univerzity Palackého v Olomouci zvaného UPbot.")
+        meta(name="keywords" content="Rozhraní, chatbot, UPbot, Univerzita Palackého, Katedra informatiky")
+        meta(name="author" content="Jan Nejezchleba")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(href="css/icons.css" rel="stylesheet")
+        link(href="css/style.css" rel="stylesheet")
+        link(href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet")
+
+        link(rel="icon" type="image/png" sizes="192x192"  href="favicon/android-icon-192x192.png")
+        link(rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png")
+        link(rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png")
+        link(rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png")
+        link(rel="manifest" href="favicon//manifest.json")
+        meta(name="theme-color" content="#ffffff")
+        
+    body(class="background-grad--main")
+        header(class="header--line")
+            block header
+
+        main
+            block content
+        
+        footer(class="footer--line")
+            block footer 
+            
+        block scripts
